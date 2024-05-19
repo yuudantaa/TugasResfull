@@ -1,0 +1,32 @@
+﻿@page "/book"
+@using BlazorSample
+@rendermode InteractiveServer
+
+<PageTitle>Books</PageTitle>
+<h3>Books</h3>
+
+<ul>
+     @foreach (var book in books)
+      {
+         <li>
+            <input type="checkbox" @bind="book.IsDone" />
+            <input @bind="book.Title" />
+         </li>
+      }
+</ul>
+
+<input placeholder="Something book" @bind="newBooks" />
+<button @onclick="AddBooks">Add todo</button>
+
+@code {
+    private List<BooksItem> books = new();
+    private string? newBooks;
+    private void AddBooks()
+    {
+        if (!string.IsNullOrWhiteSpace(newBooks))
+        {
+            books.Add(new BooksItem { Title = newBooks });
+            newBooks = string.Empty;
+        }
+    }
+}
